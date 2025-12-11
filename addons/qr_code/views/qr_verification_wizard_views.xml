@@ -1,0 +1,32 @@
+<odoo>
+	<record id="view_verify_qr_wizard_form" model="ir.ui.view">
+		<field name="name">Verify QR Wizard Form</field>
+		<field name="model">qr_verification_wizard</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="text" help="Since there is no scanning feature, this will be use as a mock up json extraction from qr code"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="verify_qr_code" string="Verify" type="object" class="btn btn-primary"/>
+					<button string="Cancel" class="btn btn-secondary" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_verify_qr" model="ir.actions.act_window">
+		<field name="name">Verify QR Code</field>
+		<field name="res_model">qr_verification_wizard</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+
+	<menuitem 
+		id="menu_verify_qr_code" 
+		action="action_verify_qr" 
+		name="Verify QR Code" 
+	/>
+</odoo>

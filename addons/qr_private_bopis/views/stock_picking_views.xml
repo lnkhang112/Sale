@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_qr" model="ir.ui.view">
+        <field name="name">stock.picking.form.qr</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Thêm nút vào header -->
+            <xpath expr="//button[@name='action_assign']" position="after">
+                <button name="generate_qr_token" 
+                        string="Tạo QR Code" 
+                        type="object"
+                        invisible="qr_private_token"
+                        class="btn-secondary"/>
+                <button name="action_send_qr_email" 
+                        string="Gửi QR Email" 
+                        type="object"
+                        invisible="not qr_private_token or qr_token_sent"
+                        class="btn-primary"/>
+            </xpath>
+            
+            <!-- Thêm field vào form -->
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <!-- <field name="is_bopis" string=" Là đơn BOPIS" widget="boolean_toggle"/>
+                <field name="qr_private_token" string="Mã QR Token" readonly="1" 
+                       invisible="not qr_private_token"/>
+                <field name="qr_token_sent" invisible="1"/> -->
+
+                <field name="is_bopis" invisible="1"/>
+                <field name="qr_private_token" invisible="1"/>
+                <field name="qr_token_sent" invisible="1"/>
+            </xpath>
+            
+            <!-- Thêm QR Code ở cuối form -->
+            <xpath expr="//sheet" position="inside">
+                <group string=" QR Code Nhận Hàng" invisible="not qr_private_code">
+                    <field name="qr_private_code" widget="image" nolabel="1"
+                           options="{'size': [250, 250]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

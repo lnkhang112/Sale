@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_qr_scanner_form" model="ir.ui.view">
+        <field name="name">qr.scanner.form</field>
+        <field name="model">qr.scanner</field>
+        <field name="arch" type="xml">
+            <form string="Quét QR Code">
+                <sheet>
+                    <group>
+                        <field name="scanned_token" placeholder="Nhập hoặc quét mã QR..."/>
+                    </group>
+                    <group invisible="not result_message">
+                        <field name="result_success" invisible="1"/>
+                        <field name="result_message" 
+                               class="alert alert-success" 
+                               readonly="1"
+                               invisible="not result_success"/>
+                        <field name="result_message" 
+                               class="alert alert-danger" 
+                               readonly="1"
+                               invisible="result_success"/>
+                        <field name="picking_id" invisible="not picking_id"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_verify_qr" 
+                            string="Xác thực" 
+                            type="object" 
+                            class="btn-primary"/>
+                    <button string="Đóng" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_qr_scanner" model="ir.actions.act_window">
+        <field name="name">Quét QR Code</field>
+        <field name="res_model">qr.scanner</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_qr_scanner"
+              name="Quét QR BOPIS"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="action_qr_scanner"
+              sequence="10"/>
+</odoo>

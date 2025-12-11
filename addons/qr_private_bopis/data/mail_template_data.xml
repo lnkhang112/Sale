@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_qr_code" model="mail.template">
+            <field name="name">QR Code - Nhận hàng tại cửa hàng</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="subject">Mã QR nhận hàng - Đơn ${object.sale_id.name or object.origin or object.name}</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2 style="color: #333;">Xin chào ${object.partner_id.name},</h2>
+                    <p>Đơn hàng <strong>${object.sale_id.name or object.origin or object.name}</strong> của bạn đã sẵn sàng để nhận tại cửa hàng!</p>
+                    
+                    <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                        <p style="margin-bottom: 15px;"><strong>Vui lòng đưa mã QR này khi đến nhận hàng:</strong></p>
+                        <field name="qr_private_code" widget="image" nolabel="1"
+                           options="{'size': [250, 250]}"/>
+                        <p style="margin-top: 15px; font-size: 12px; color: #666;">
+                            Mã token: ${object.qr_private_token}
+                        </p>
+                    </div>
+                    
+                    <h3>Hướng dẫn nhận hàng:</h3>
+                    <ol>
+                        <li>Đến cửa hàng của chúng tôi</li>
+                        <li>Đưa mã QR này cho nhân viên</li>
+                        <li>Nhân viên sẽ quét mã và xác nhận</li>
+                        <li>Nhận hàng và hoàn tất!</li>
+                    </ol>
+                    
+                    <p style="color: #666; font-size: 12px; margin-top: 30px;">
+                        Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

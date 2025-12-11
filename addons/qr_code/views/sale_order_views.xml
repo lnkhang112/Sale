@@ -1,0 +1,36 @@
+<odoo>
+	<record id="view_order_form_qr_code" model="ir.ui.view">
+		<field name="name">sale.order.form.qr.code</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+			<!-- ẨN TAB ORDER LINES -->
+			<xpath expr="//page[@name='order_lines']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+			<!-- ẨN TAB OTHER INFO -->
+            <xpath expr="//page[@name='other_information']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+			<xpath expr="//notebook" position="inside">
+				<page string="QR Code" name="qr_code" invisible="not qr_code">
+					<group>
+						<group>
+							<field name="qr_version" readonly="1"/>
+							<field name="qr_issued_at" readonly="1"/>
+							<field name="qr_expires_at" readonly="1" invisible="not qr_expires_at"/>
+							<field name="qr_used_at" readonly="1" invisible="not qr_used_at"/>
+						</group>
+						<group>
+							<field name="qr_code" widget="image" readonly="1"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>
+

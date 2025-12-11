@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Thêm QR Code vào trang chi tiết đơn bán hàng trong portal -->
+    <template id="sale_order_portal_content_inherit" name="Sale Order Portal QR Code" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//div[@id='introduction']" position="after">
+            <t t-set="picking_bopis" t-value="sale_order.picking_ids.filtered(lambda p: p.is_bopis and p.qr_private_code)"/>
+            <t t-if="picking_bopis">
+                <div class="card mb-3" style="border: 2px solid #28a745;">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fa fa-qrcode"/> Mã QR Nhận Hàng Tại Cửa Hàng (BOPIS)
+                        </h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="lead">Vui lòng đưa mã QR này cho nhân viên khi đến nhận hàng</p>
+                        
+                        <t t-foreach="picking_bopis[:1]" t-as="picking">
+                            <div class="qr-code-container" style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: inline-block; margin: 20px 0;">
+                                <img t-att-src="'data:image/png;base64,' + picking.qr_private_code.decode('utf-8')" 
+                                     alt="QR Code" 
+                                     style="width: 300px; height: 300px; border: 3px solid #dee2e6; padding: 10px; background: white;"/>
+                                
+                                <div class="mt-3">
+                                    <small class="text-muted">Mã giao hàng: <strong t-esc="picking.name"/></small><br/>
+                                    <small class="text-muted" style="font-size: 10px; word-break: break-all;">
+                                        Token: <code t-esc="picking.qr_private_token"/>
+                                    </small>
+                                </div>
+                            </div>
+                        </t>
+                        
+                        <div class="alert alert-info mt-3">
+                            <h5><i class="fa fa-info-circle"/> Hướng dẫn nhận hàng:</h5>
+                            <ol class="text-left" style="display: inline-block;">
+                                <li>Đến cửa hàng của chúng tôi</li>
+                                <li>Đưa mã QR này cho nhân viên</li>
+                                <li>Nhân viên sẽ quét mã và xác nhận</li>
+                                <li>Nhận hàng và hoàn tất!</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fa fa-exclamation-triangle"/> 
+                            <strong>Lưu ý:</strong> Bạn có thể chụp màn hình mã QR này hoặc lưu trang web để sử dụng khi đến cửa hàng.
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

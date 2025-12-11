@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_qr_scanner_user,qr.scanner.user,model_qr_scanner,stock.group_stock_user,1,1,1,1
+access_qr_scanner_manager,qr.scanner.manager,model_qr_scanner,stock.group_stock_manager,1,1,1,1
+access_stock_picking_portal,stock.picking.portal,stock.model_stock_picking,base.group_portal,1,0,0,0
